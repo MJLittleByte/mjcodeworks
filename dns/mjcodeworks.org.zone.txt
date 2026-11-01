@@ -1,0 +1,21 @@
+;; DNS records for mjcodeworks.org → GitHub Pages (repository MJLittleByte/mjcodeworks)
+;;
+;; Import: Cloudflare dashboard → mjcodeworks.org → DNS → Records → Import and Export → Import DNS records.
+;; Every record is tagged cf-proxied:false (DNS only, grey cloud) so GitHub can issue the HTTPS certificate.
+;; TTL 1 = Cloudflare "Auto".
+$ORIGIN mjcodeworks.org.
+
+;; Apex (mjcodeworks.org) → GitHub Pages, IPv4
+mjcodeworks.org.	1	IN	A	185.199.108.153	; cf_tags=cf-proxied:false
+mjcodeworks.org.	1	IN	A	185.199.109.153	; cf_tags=cf-proxied:false
+mjcodeworks.org.	1	IN	A	185.199.110.153	; cf_tags=cf-proxied:false
+mjcodeworks.org.	1	IN	A	185.199.111.153	; cf_tags=cf-proxied:false
+
+;; Apex (mjcodeworks.org) → GitHub Pages, IPv6
+mjcodeworks.org.	1	IN	AAAA	2606:50c0:8000::153	; cf_tags=cf-proxied:false
+mjcodeworks.org.	1	IN	AAAA	2606:50c0:8001::153	; cf_tags=cf-proxied:false
+mjcodeworks.org.	1	IN	AAAA	2606:50c0:8002::153	; cf_tags=cf-proxied:false
+mjcodeworks.org.	1	IN	AAAA	2606:50c0:8003::153	; cf_tags=cf-proxied:false
+
+;; www.mjcodeworks.org → GitHub Pages (GitHub redirects it to mjcodeworks.org)
+www.mjcodeworks.org.	1	IN	CNAME	mjlittlebyte.github.io.	; cf_tags=cf-proxied:false

@@ -18,6 +18,7 @@ site/                         ← everything in here is published
   assets/js/main.js           theme toggle, mobile menu, scroll reveal, copy button
   assets/fonts/               self-hosted Geist + Instrument Serif (SIL OFL, licences included)
 scripts/check-site.mjs        link / page checker used by CI
+dns/mjcodeworks.org.zone.txt  Cloudflare DNS records (BIND zone file, ready to import)
 .github/workflows/pages.yml   checks the site and deploys it to GitHub Pages
 ```
 
@@ -47,7 +48,10 @@ Pages. Pull requests run the checker only. You can also deploy by hand from **Ac
 ### Custom domain (Cloudflare DNS)
 
 GitHub Pages is set to the custom domain `mjcodeworks.org` (repository **Settings → Pages**). Add these records in
-**Cloudflare → mjcodeworks.org → DNS → Records**, all with **Proxy status: DNS only** (grey cloud):
+**Cloudflare → mjcodeworks.org → DNS → Records**, all with **Proxy status: DNS only** (grey cloud). The quickest way is
+to import [`dns/mjcodeworks.org.zone.txt`](dns/mjcodeworks.org.zone.txt) via **Import and Export → Import DNS records**.
+Every record in that file is tagged `cf-proxied:false`, so it stays DNS only whatever the "Proxy imported DNS records"
+checkbox says:
 
 | Type  | Name  | Content                  |
 |-------|-------|--------------------------|
