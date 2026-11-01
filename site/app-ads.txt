@@ -1,0 +1,6 @@
+# app-ads.txt for MJ Codeworks apps.
+# Google AdMob reads this file from the "Website" set in your Google Play developer profile,
+# so it must live at https://mjcodeworks.org/app-ads.txt.
+# Replace pub-0000000000000000 with your AdMob publisher ID (AdMob → Settings → Account information),
+# then remove the leading "# " from the line below.
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
