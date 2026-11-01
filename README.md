@@ -33,8 +33,10 @@ Opening `site/index.html` directly in a browser also works (everything except `4
 
 ## Common edits
 
-- **Email and phone** are placeholders ("Coming soon"). Search for `Coming soon` in `site/index.html` and
-  `coming soon` in `site/privacy/index.html`. The replacement markup is in an HTML comment next to each one.
+- **Email:** `hello@mjcodeworks.org` is the public address (home page, footers, company privacy policy) and
+  `support@mjcodeworks.org` is used in every app privacy policy. Both are forwarded by Cloudflare Email Routing (below).
+- **Phone** is still a placeholder ("Coming soon"). Search for `Coming soon` in `site/index.html`; the replacement
+  markup is in an HTML comment next to it.
 - **Adding an app policy:** copy an existing `site/apps/<app>/privacy/index.html`, edit it, add a card to the list in
   `site/privacy/index.html` and a `<loc>` line to `site/sitemap.xml`.
 - **Brand colours** are CSS variables at the top of `site/assets/css/styles.css` (`--p1`, `--p2`, `--glow1`,
@@ -74,16 +76,35 @@ Then:
 3. Optional: if you later switch the records to **Proxied** (orange cloud) for Cloudflare caching, set
    **SSL/TLS → Overview** to **Full (strict)**. "Flexible" causes redirect loops with Enforce HTTPS.
 
-### Business email (suggestion)
+### Business email (Cloudflare Email Routing)
 
-**Cloudflare → Email → Email Routing** can forward an address such as `hello@mjcodeworks.org` to an existing inbox for
-free. It only adds `MX`/`TXT` records and does not affect the website.
+Incoming mail is forwarded free of charge by Cloudflare Email Routing; there is no mailbox on the domain itself.
+
+| Address                    | Used for                                    | Forwards to            |
+|----------------------------|---------------------------------------------|------------------------|
+| `hello@mjcodeworks.org`    | Website, new projects, general questions    | `krishve1589@gmail.com` |
+| `support@mjcodeworks.org`  | App users, app privacy policies, Play Store | `krishve1589@gmail.com` |
+
+Setup (Cloudflare dashboard → **Compute → Email Service → Email Routing**, or the domain's **Email** menu):
+
+1. **Onboard Domain** → `mjcodeworks.org`. Cloudflare adds the `MX`, SPF `TXT` and DKIM `TXT` records itself.
+2. **Destination Addresses** → add `krishve1589@gmail.com` and click the link in Cloudflare's verification email.
+3. **Routing Rules** → create `hello` → *Send to an email* → `krishve1589@gmail.com`, and the same for `support`.
+4. Test from a *different* account (Gmail can hide mail that appears to come from itself), and check Spam.
+5. Optional Gmail filters: `to:(hello@mjcodeworks.org)` → label *MJ/Hello*, `to:(support@mjcodeworks.org)` → label
+   *MJ/Support*.
+
+Email Routing only **receives**. Replies sent from Gmail come from the Gmail address. Gmail's "Send mail as" for
+outside addresses is being withdrawn by Google from January 2027, so to *send* as `@mjcodeworks.org` long-term use a
+mail host for the domain (for example Google Workspace or Zoho Mail). Moving to a mail host replaces the Cloudflare
+`MX` records.
 
 ## Google Play checklist
 
 - Update each app's **Privacy policy URL** in Play Console to its new address, e.g.
   `https://mjcodeworks.org/apps/sgbusxing/privacy/`. Keep the old URLs online until every listing has been updated.
-- Set the developer **Website** to `https://mjcodeworks.org`.
+- Set the developer **Website** to `https://mjcodeworks.org` and the public contact **Email** to
+  `support@mjcodeworks.org` (once forwarding has been tested).
 - **app-ads.txt:** AdMob reads `https://mjcodeworks.org/app-ads.txt` (the developer website's domain). Put the real
   publisher ID into `site/app-ads.txt` and uncomment the line before an app with ads goes live.
 
